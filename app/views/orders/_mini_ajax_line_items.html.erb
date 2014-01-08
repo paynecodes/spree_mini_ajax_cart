@@ -1,0 +1,41 @@
+<% line_items = order.line_items %>
+<% if line_items.empty? %>
+    <p class="cart-empty" style="padding-top: 1em; text-align: center;">Your cart is empty</p>
+    <hr>
+<% else %>
+    <table class="mini_ajax_line_items">
+        <thead>
+            <tr>
+                <th colspan="2" class="product-details-heading">Item</th>
+                <th class="product-quantity-heading" style="text-align: center">Qty</th>
+                <th class="product-price-heading" style="text-align: center">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% line_items.each_with_index do |li, index| %>
+                <% variant = li.variant %>
+                <% if index < 5 %>
+                    <tr>
+                        <td class="product-image"><%= link_to(image_tag(variant.images.first.attachment.url(:mini)), variant.product) %></td>
+                        <td class="product-details"><strong><%= link_to(variant.name, variant.product) %></strong><br><%= variant.options_text %></td>
+                        <td class="product-quantity" style="text-align: center"><%= li.quantity %></td>
+                        <td class="product-price" style="text-align: center"><%= li.single_money %></td>
+                    </tr>
+                <% else %>
+                    <tr>
+                    <td colspan="4" style="text-align: center"><%= link_to 'View All', cart_path, :class => 'view_all_link' %></td>
+                    </tr>
+                    <% break %>
+                <% end %>
+            <% end %>
+        </tbody>
+        <tfoot>
+            <tr>
+            <td colspan="4" style="text-align: right; font-weight: normal;">
+                <strong>Subtotal: </strong>
+                <%= order.display_total.to_html %>
+            </td>
+            </tr>
+        </tfoot>
+    </table>
+<% end %>

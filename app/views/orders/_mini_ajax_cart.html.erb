@@ -1,0 +1,7 @@
+<div class="mini_ajax_cart">
+    <%= render :partial => 'orders/mini_ajax_line_items', :locals => {:order => order} %>
+    <ul class="small-block-grid-2 buttons">
+      <li><%= link_to Spree.t(:edit_cart), cart_path, :class => 'edit' %></li>
+      <li><%= link_to Spree.t(:checkout), checkout_path, :class => 'button radius checkout success' %></li>
+    </ul>
+</div>
