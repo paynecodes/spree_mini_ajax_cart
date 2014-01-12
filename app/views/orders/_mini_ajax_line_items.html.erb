@@ -16,14 +16,20 @@
                 <% variant = li.variant %>
                 <% if index < 5 %>
                     <tr>
-                        <td class="product-image"><%= link_to(image_tag(variant.images.first.attachment.url(:mini)), variant.product) %></td>
+                        <td class="product-image">
+                            <% if variant.images.length == 0 %>
+                                <%= link_to small_image(variant.product), variant.product %>
+                            <% else %>
+                                <%= link_to image_tag(variant.images.first.attachment.url(:mini)), variant.product %>
+                            <% end %>
+                        </td>
                         <td class="product-details"><strong><%= link_to(variant.name, variant.product) %></strong><br><%= variant.options_text %></td>
                         <td class="product-quantity" style="text-align: center"><%= li.quantity %></td>
                         <td class="product-price" style="text-align: center"><%= li.single_money %></td>
                     </tr>
                 <% else %>
                     <tr>
-                    <td colspan="4" style="text-align: center"><%= link_to 'View All', cart_path, :class => 'view_all_link' %></td>
+                    <td colspan="4" style="text-align: center"><%= link_to Spree.t(:view_all), cart_path, :class => 'view_all_link' %></td>
                     </tr>
                     <% break %>
                 <% end %>
